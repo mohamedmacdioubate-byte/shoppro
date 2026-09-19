@@ -29,6 +29,8 @@ export async function POST(req: Request) {
   }
 
   const passwordHash = await hashPassword(password);
+  // is_founder n'est jamais défini ici : il ne peut être positionné que
+  // manuellement en base, jamais via cette route publique.
   const { rows } = await query<{ id: string }>(
     `INSERT INTO users (full_name, email, phone, password_hash)
      VALUES ($1, $2, $3, $4) RETURNING id`,

@@ -79,18 +79,26 @@ export default function DashboardPage() {
               <div style={{ fontWeight: 600 }}>{c.name}</div>
               <div style={{ fontSize: 12.5, color: "var(--text-secondary)" }}>{c.role_name}</div>
             </div>
-            <span
-              style={{
-                fontSize: 11,
-                fontWeight: 600,
-                padding: "4px 10px",
-                borderRadius: 6,
-                background: c.status === "active" ? "var(--green-dim)" : "var(--orange, #F59E0B)",
-                color: c.status === "active" ? "var(--green)" : "#0a0e17",
-              }}
-            >
-              {c.status}
-            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <Link href={`/companies/${c.id}/products`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Gérer les produits
+              </Link>
+              <Link href={`/shop/${c.id}`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Voir la boutique
+              </Link>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  padding: "4px 10px",
+                  borderRadius: 6,
+                  background: c.status === "active" ? "var(--green-dim)" : "var(--orange, #F59E0B)",
+                  color: c.status === "active" ? "var(--green)" : "#0a0e17",
+                }}
+              >
+                {c.status}
+              </span>
+            </div>
           </div>
         ))}
       </div>

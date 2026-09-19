@@ -67,7 +67,32 @@ export async function POST(req: Request) {
       [data.companyId, data.categoryId ?? null, data.name, data.description ?? null,
        data.sku ?? null, data.basePrice, data.professionalPrice ?? null]
     );
-    return rows[0];
+    const created = rows[0];
+
+    // Simplification temporaire tant qu'il n'y a pas encore d'interface de
+    // gestion des dépôts/stock : on s'assure qu'un dépôt par défaut existe
+    // pour l'entreprise, et on initialise le stock du nouveau produit à une
+    // quantité de démonstration. À remplacer par une vraie saisie de stock
+    // une fois l'écran "Dépôts" construit.
+    let warehouse = await client.query(
+      `SELECT id FROM warehouses WHERE company_id = $1 ORDER BY created_at LIMIT 1`,
+      [data.companyId]
+    );
+    if (warehouse.rows.length === 0) {
+      warehouse = await client.query(
+        `INSERT INTO warehouses (company_id, name) VALUES ($1, 'Dépôt principal') RETURNING id`,
+        [data.companyId]
+      );
+    }
+    const warehouseId = warehouse.rows[0].id;
+
+    await client.query(
+      `INSERT INTO inventory (company_id, warehouse_id, product_id, quantity, min_threshold)
+       VALUES ($1, $2, $3, 100, 5)`,
+      [data.companyId, warehouseId, created.id]
+    );
+
+    return created;
   });
 
   return NextResponse.json({ product }, { status: 201 });
