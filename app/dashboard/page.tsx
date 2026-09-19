@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Company = {
   id: string;
@@ -44,9 +45,16 @@ export default function DashboardPage() {
     <main style={{ maxWidth: 720, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <div style={{ fontSize: 20, fontWeight: 700 }}>Mes entreprises</div>
-        <button className="btn" onClick={logout} style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>
-          Déconnexion
-        </button>
+        <div style={{ display: "flex", gap: 10 }}>
+          <Link href="/companies/new" className="btn">+ Créer mon entreprise</Link>
+          <button
+            className="btn"
+            onClick={logout}
+            style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}
+          >
+            Déconnexion
+          </button>
+        </div>
       </div>
 
       {error && <div className="error-text">{error}</div>}
@@ -58,6 +66,9 @@ export default function DashboardPage() {
       {companies?.length === 0 && (
         <div className="panel" style={{ textAlign: "center", color: "var(--text-secondary)" }}>
           Vous n&apos;êtes rattaché à aucune entreprise pour le moment.
+          <div style={{ marginTop: 14 }}>
+            <Link href="/companies/new" className="btn">Créer ma première entreprise</Link>
+          </div>
         </div>
       )}
 
