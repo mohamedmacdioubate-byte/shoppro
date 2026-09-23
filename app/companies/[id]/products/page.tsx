@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import { extractErrorMessage } from "@/lib/errors";
 
 type Product = {
   id: string;
@@ -73,7 +74,7 @@ export default function CompanyProductsPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setFormError(data.error?.formErrors?.[0] ?? data.error ?? "Une erreur est survenue");
+        setFormError(extractErrorMessage(data.error));
         return;
       }
       setName("");

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { extractErrorMessage } from "@/lib/errors";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error?.formErrors?.[0] ?? data.error ?? "Une erreur est survenue");
+        setError(extractErrorMessage(data.error));
         return;
       }
       localStorage.setItem("token", data.token);
