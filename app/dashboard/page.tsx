@@ -92,10 +92,16 @@ export default function DashboardPage() {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <Link href={`/companies/${c.id}/products`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
-                Gérer les produits
+                Produits
+              </Link>
+              <Link href={`/companies/${c.id}/warehouses`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Dépôts
+              </Link>
+              <Link href={`/companies/${c.id}/stock`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Stock
               </Link>
               <Link href={`/shop/${c.id}`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
-                Voir la boutique
+                Boutique
               </Link>
               <span
                 style={{
