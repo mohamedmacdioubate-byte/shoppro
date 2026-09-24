@@ -16,6 +16,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [companies, setCompanies] = useState<Company[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isFounder, setIsFounder] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,6 +35,11 @@ export default function DashboardPage() {
         setCompanies(data.companies ?? []);
       })
       .catch(() => setError("Impossible de charger vos entreprises"));
+
+    fetch("/api/auth/me", { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.json())
+      .then((data) => setIsFounder(Boolean(data.user?.is_founder)))
+      .catch(() => {});
   }, [router]);
 
   function logout() {
@@ -46,6 +52,11 @@ export default function DashboardPage() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <div style={{ fontSize: 20, fontWeight: 700 }}>Mes entreprises</div>
         <div style={{ display: "flex", gap: 10 }}>
+          {isFounder && (
+            <Link href="/founder" className="btn" style={{ background: "#d9a441" }}>
+              👑 Espace Fondateur
+            </Link>
+          )}
           <Link href="/companies/new" className="btn">+ Créer mon entreprise</Link>
           <button
             className="btn"
