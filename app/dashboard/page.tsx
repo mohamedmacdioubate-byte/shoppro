@@ -58,6 +58,9 @@ export default function DashboardPage() {
             </Link>
           )}
           <Link href="/companies/new" className="btn">+ Créer mon entreprise</Link>
+          <Link href="/drivers/apply" className="btn" style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>
+            🚚 Devenir livreur
+          </Link>
           <button
             className="btn"
             onClick={logout}
@@ -99,6 +102,12 @@ export default function DashboardPage() {
               </Link>
               <Link href={`/companies/${c.id}/stock`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
                 Stock
+              </Link>
+              <Link href={`/companies/${c.id}/drivers`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Livreurs
+              </Link>
+              <Link href={`/companies/${c.id}/deliveries`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
+                Livraisons
               </Link>
               <Link href={`/shop/${c.id}`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>
                 Boutique
