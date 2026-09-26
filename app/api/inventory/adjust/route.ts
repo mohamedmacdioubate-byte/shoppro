@@ -30,8 +30,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Permission insuffisante" }, { status: 403 });
   }
 
-  // "entree" et "ajustement" augmentent le stock ici ; "sortie" le diminue.
-  // Un ajustement à la baisse se fait en choisissant "sortie".
   const delta = data.type === "sortie" ? -data.quantity : data.quantity;
 
   try {

@@ -19,8 +19,6 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
-  // Le livreur ne peut modifier QUE ses propres livraisons — vérifié via la
-  // chaîne drivers.user_id = session.userId, jamais via un id envoyé tel quel.
   const delivery = await query(
     `SELECT del.id, del.order_id
      FROM deliveries del
@@ -44,7 +42,20 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   );
 
   if (parsed.data.status === "livree") {
-    await query(`UPDATE orders SET status = 'livree', updated_at = now() WHERE id = $1`, [delivery.rows[0].order_id]);
+    const order = await query(
+      `UPDATE orders SET status = 'livree', updated_at = now() WHERE id = $1 RETURNING order_number, customer_id`,
+      [delivery.rows[0].order_id]
+    );
+    if (order.rows.length > 0) {
+      const customer = await query(`SELECT user_id FROM customers WHERE id = $1`, [order.rows[0].customer_id]);
+      if (customer.rows.length > 0) {
+        await query(
+          `INSERT INTO notifications (user_id, type, title, body, related_entity_type, related_entity_id)
+           VALUES ($1, 'livraison', 'Commande livrée', $2, 'order', $3)`,
+          [customer.rows[0].user_id, `Votre commande ${order.rows[0].order_number} a été livrée`, delivery.rows[0].order_id]
+        );
+      }
+    }
   }
 
   return NextResponse.json({ delivery: rows[0] });

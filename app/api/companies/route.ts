@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { query } from "@/lib/db";
+import { query, pool } from "@/lib/db";
 import { getSessionFromRequest } from "@/lib/auth";
 
-// Liste les entreprises auxquelles l'utilisateur connecté appartient,
-// avec son rôle dans chacune (permet le sélecteur "changer d'entreprise").
 export async function GET(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
@@ -30,10 +28,6 @@ const CreateCompanySchema = z.object({
   city: z.string().optional(),
 });
 
-// Inscription d'une nouvelle entreprise. Elle est créée avec le statut
-// 'en_attente' — elle ne devient utilisable qu'après validation Fondateur
-// (voir section 30 du cahier des charges : pas d'accès immédiat aux
-// fonctionnalités professionnelles).
 export async function POST(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
@@ -44,7 +38,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
-  const client = await (await import("@/lib/db")).pool.connect();
+  const client = await pool.connect();
   try {
     await client.query("BEGIN");
 

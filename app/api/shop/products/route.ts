@@ -2,11 +2,6 @@ import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { getSessionFromRequest } from "@/lib/auth";
 
-// Contrairement à /api/products (réservée aux membres de l'entreprise),
-// cette route sert le catalogue PUBLIC vu par les clients — n'importe quel
-// utilisateur connecté peut la consulter, pas besoin d'appartenir à
-// l'entreprise. Elle renvoie aussi l'identifiant du dépôt par défaut, utilisé
-// tant qu'il n'y a pas de sélection de dépôt côté client.
 export async function GET(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });

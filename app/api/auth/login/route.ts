@@ -4,7 +4,7 @@ import { query } from "@/lib/db";
 import { verifyPassword, signSession } from "@/lib/auth";
 
 const LoginSchema = z.object({
-  identifier: z.string().min(3), // email ou téléphone
+  identifier: z.string().min(3),
   password: z.string().min(1),
 });
 
@@ -38,13 +38,9 @@ export async function POST(req: Request) {
   }
 
   if (user.is_founder && user.two_factor_enabled) {
-    // Le flux 2FA (envoi + vérification du code) est une étape séparée à
-    // implémenter avant d'émettre le token final pour un compte Fondateur.
     return NextResponse.json({ requiresTwoFactor: true, userId: user.id });
   }
 
-  // is_founder est lu depuis la base, jamais fourni par le client : c'est
-  // ce qui empêche quiconque de "devenir Fondateur" via une requête forgée.
   const token = signSession({ userId: user.id, isFounder: user.is_founder });
 
   await query(`UPDATE users SET last_login_at = now() WHERE id = $1`, [user.id]);

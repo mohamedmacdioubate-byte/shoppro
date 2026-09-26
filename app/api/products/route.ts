@@ -4,12 +4,6 @@ import { query, withTenant } from "@/lib/db";
 import { getSessionFromRequest } from "@/lib/auth";
 import { resolveMembership, hasPermission } from "@/lib/tenant";
 
-// Toutes les routes métier suivent le même schéma :
-// 1. vérifier le token (session)
-// 2. résoudre l'appartenance de l'utilisateur à l'entreprise demandée
-// 3. vérifier la permission requise pour l'action
-// 4. exécuter la requête, toujours filtrée par company_id
-
 export async function GET(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
@@ -69,11 +63,6 @@ export async function POST(req: Request) {
     );
     const created = rows[0];
 
-    // Simplification temporaire tant qu'il n'y a pas encore d'interface de
-    // gestion des dépôts/stock : on s'assure qu'un dépôt par défaut existe
-    // pour l'entreprise, et on initialise le stock du nouveau produit à une
-    // quantité de démonstration. À remplacer par une vraie saisie de stock
-    // une fois l'écran "Dépôts" construit.
     let warehouse = await client.query(
       `SELECT id FROM warehouses WHERE company_id = $1 ORDER BY created_at LIMIT 1`,
       [data.companyId]

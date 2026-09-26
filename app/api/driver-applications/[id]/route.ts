@@ -49,6 +49,22 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       );
     }
 
+    const driverUser = await client.query(`SELECT user_id FROM drivers WHERE id = $1`, [application.driver_id]);
+    if (driverUser.rows.length > 0) {
+      await client.query(
+        `INSERT INTO notifications (user_id, company_id, type, title, body)
+         VALUES ($1, $2, 'nouvelle_candidature', $3, $4)`,
+        [
+          driverUser.rows[0].user_id,
+          application.company_id,
+          parsed.data.status === "acceptee" ? "Candidature acceptée" : "Candidature refusée",
+          parsed.data.status === "acceptee"
+            ? "Vous êtes maintenant livreur actif pour cette entreprise"
+            : "Votre candidature n'a pas été retenue",
+        ]
+      );
+    }
+
     return res.rows[0];
   });
 

@@ -99,6 +99,8 @@ export default function FounderPage() {
         Validation et suivi des entreprises de la plateforme
       </div>
 
+      <PlatformReviewsSummary />
+
       <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
         {FILTERS.map((f) => (
           <button
@@ -197,5 +199,37 @@ export default function FounderPage() {
         ))}
       </div>
     </main>
+  );
+}
+
+function PlatformReviewsSummary() {
+  const [reviews, setReviews] = useState<{ id: string; rating: number; comment: string | null; reviewer_name: string }[] | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("/api/reviews?platform=1", { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.json())
+      .then((data) => setReviews(data.reviews ?? []))
+      .catch(() => {});
+  }, []);
+
+  if (!reviews || reviews.length === 0) return null;
+
+  const average = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+
+  return (
+    <div className="panel" style={{ marginBottom: 20 }}>
+      <div style={{ fontWeight: 600, marginBottom: 4 }}>Avis sur la plateforme</div>
+      <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 10 }}>
+        Note moyenne : {average} ★ ({reviews.length} avis)
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {reviews.slice(0, 3).map((r) => (
+          <div key={r.id} style={{ fontSize: 12.5 }}>
+            <strong>{r.reviewer_name}</strong> — {"★".repeat(r.rating)} {r.comment}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -8,14 +8,6 @@ export type MembershipContext = {
   permissions: string[];
 };
 
-/**
- * Vérifie que l'utilisateur appartient bien à l'entreprise demandée et
- * renvoie son rôle + ses permissions dans CETTE entreprise. C'est le
- * garde-fou central de l'isolation multi-tenant : toute route métier doit
- * appeler cette fonction avant de lire/écrire quoi que ce soit, et utiliser
- * uniquement le companyId qu'elle retourne — jamais un companyId fourni
- * tel quel par le client sans vérification.
- */
 export async function resolveMembership(
   userId: string,
   companyId: string
@@ -50,6 +42,5 @@ export async function resolveMembership(
 }
 
 export function hasPermission(ctx: MembershipContext, code: string): boolean {
-  // Le Directeur a implicitement tous les droits sur son entreprise.
   return ctx.isDirector || ctx.permissions.includes(code);
 }

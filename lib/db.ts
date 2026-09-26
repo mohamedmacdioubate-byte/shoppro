@@ -1,7 +1,5 @@
 import { Pool, type PoolClient, type QueryResultRow } from "pg";
 
-// Pool unique réutilisé par toute l'application (Next.js recharge ce module
-// entre les requêtes en dev, d'où le cache sur globalThis).
 declare global {
   // eslint-disable-next-line no-var
   var __pgPool: Pool | undefined;
@@ -12,15 +10,13 @@ export const pool =
   new Pool({
     connectionString: process.env.DATABASE_URL,
     max: 10,
+    ssl: { rejectUnauthorized: false },
   });
 
 if (process.env.NODE_ENV !== "production") {
   global.__pgPool = pool;
 }
 
-/**
- * Exécute une requête simple (sans besoin d'isolation transactionnelle).
- */
 export async function query<T extends QueryResultRow = QueryResultRow>(
   text: string,
   params: unknown[] = []
@@ -28,13 +24,6 @@ export async function query<T extends QueryResultRow = QueryResultRow>(
   return pool.query<T>(text, params);
 }
 
-/**
- * Exécute une série d'opérations dans une transaction, avec le company_id
- * du tenant actif positionné pour la durée de la transaction. Si des
- * politiques Row Level Security sont activées côté PostgreSQL (voir
- * schema.sql), elles s'appliqueront automatiquement à toutes les requêtes
- * exécutées via `client` dans ce callback.
- */
 export async function withTenant<T>(
   companyId: string,
   fn: (client: PoolClient) => Promise<T>

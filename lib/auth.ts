@@ -22,9 +22,6 @@ export type SessionPayload = {
 };
 
 export function signSession(payload: SessionPayload): string {
-  // Ne jamais inclure isFounder=true ici sauf si l'utilisateur est
-  // RÉELLEMENT marqué is_founder=true en base — ce token ne doit jamais
-  // pouvoir être construit ou modifié côté client (voir /api/auth/login).
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 }
 
@@ -36,10 +33,6 @@ export function verifySession(token: string): SessionPayload | null {
   }
 }
 
-/**
- * Extrait et vérifie le token depuis l'en-tête Authorization d'une requête.
- * Retourne null si absent ou invalide — à chaque route de gérer le 401.
- */
 export function getSessionFromRequest(req: Request): SessionPayload | null {
   const authHeader = req.headers.get("authorization");
   if (!authHeader?.startsWith("Bearer ")) return null;

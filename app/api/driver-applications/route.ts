@@ -4,8 +4,6 @@ import { query } from "@/lib/db";
 import { getSessionFromRequest } from "@/lib/auth";
 import { resolveMembership } from "@/lib/tenant";
 
-// GET ?companyId=...  → vue entreprise (toutes les candidatures reçues)
-// GET ?mine=1         → vue livreur (ses propres candidatures, tous statuts)
 export async function GET(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
@@ -82,6 +80,18 @@ export async function POST(req: Request) {
     `INSERT INTO driver_applications (driver_id, company_id) VALUES ($1, $2) RETURNING id, status`,
     [driverId, parsed.data.companyId]
   );
+
+  const staff = await query(
+    `SELECT user_id FROM company_members WHERE company_id = $1 AND status = 'actif'`,
+    [parsed.data.companyId]
+  );
+  for (const s of staff.rows) {
+    await query(
+      `INSERT INTO notifications (user_id, company_id, type, title, body)
+       VALUES ($1, $2, 'nouvelle_candidature', 'Nouvelle candidature livreur', 'Un livreur a postulé chez vous')`,
+      [s.user_id, parsed.data.companyId]
+    );
+  }
 
   return NextResponse.json({ application: rows[0] }, { status: 201 });
 }

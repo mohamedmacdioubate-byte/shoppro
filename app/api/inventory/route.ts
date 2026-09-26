@@ -9,7 +9,7 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const companyId = searchParams.get("companyId");
-  const warehouseId = searchParams.get("warehouseId"); // optionnel
+  const warehouseId = searchParams.get("warehouseId");
   if (!companyId) return NextResponse.json({ error: "companyId requis" }, { status: 400 });
 
   const membership = await resolveMembership(session.userId, companyId);

@@ -16,7 +16,7 @@ export async function GET(req: Request) {
 }
 
 const CreateDriverSchema = z.object({
-  vehicleType: z.string().min(1).optional(),
+  vehicleType: z.string().min(2),
   vehiclePlate: z.string().optional(),
 });
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
 
-  const body = await req.json().catch(() => ({}));
+  const body = await req.json();
   const parsed = CreateDriverSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
   const { rows } = await query(
     `INSERT INTO drivers (user_id, vehicle_type, vehicle_plate) VALUES ($1, $2, $3) RETURNING id`,
-    [session.userId, parsed.data.vehicleType ?? null, parsed.data.vehiclePlate ?? null]
+    [session.userId, parsed.data.vehicleType, parsed.data.vehiclePlate ?? null]
   );
 
   return NextResponse.json({ driverId: rows[0].id }, { status: 201 });

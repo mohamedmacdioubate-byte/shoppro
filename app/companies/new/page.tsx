@@ -18,20 +18,12 @@ export default function NewCompanyPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
     const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-
+    if (!token) { router.push("/login"); return; }
     try {
       const res = await fetch("/api/companies", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ name, sector, city, phone }),
       });
       const data = await res.json();
@@ -55,34 +47,14 @@ export default function NewCompanyPage() {
           Elle sera créée avec le statut &laquo;&nbsp;en attente&nbsp;&raquo; jusqu&apos;à validation.
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Nom de l&apos;entreprise</label>
-            <input value={name} onChange={(e) => setName(e.target.value)} required />
-          </div>
-          <div className="field">
-            <label>Secteur</label>
-            <input
-              value={sector}
-              onChange={(e) => setSector(e.target.value)}
-              placeholder="Boissons, Électronique, Alimentaire..."
-            />
-          </div>
-          <div className="field">
-            <label>Ville</label>
-            <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Conakry" />
-          </div>
-          <div className="field">
-            <label>Téléphone</label>
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+224 6xx xx xx xx" />
-          </div>
+          <div className="field"><label>Nom de l&apos;entreprise</label><input value={name} onChange={(e) => setName(e.target.value)} required /></div>
+          <div className="field"><label>Secteur</label><input value={sector} onChange={(e) => setSector(e.target.value)} placeholder="Boissons, Électronique..." /></div>
+          <div className="field"><label>Ville</label><input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Conakry" /></div>
+          <div className="field"><label>Téléphone</label><input value={phone} onChange={(e) => setPhone(e.target.value)} /></div>
           {error && <div className="error-text">{error}</div>}
-          <button className="btn block" disabled={loading} type="submit">
-            {loading ? "Création..." : "Créer mon entreprise"}
-          </button>
+          <button className="btn block" disabled={loading} type="submit">{loading ? "Création..." : "Créer mon entreprise"}</button>
         </form>
-        <div className="muted-link">
-          <Link href="/dashboard">← Retour au tableau de bord</Link>
-        </div>
+        <div className="muted-link"><Link href="/dashboard">← Retour au tableau de bord</Link></div>
       </div>
     </main>
   );

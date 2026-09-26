@@ -33,7 +33,6 @@ export async function POST(req: Request) {
 
   try {
     await withTenant(data.companyId, async (client) => {
-      // Décrémente la source
       const source = await client.query(
         `SELECT id, quantity FROM inventory WHERE warehouse_id = $1 AND product_id = $2 FOR UPDATE`,
         [data.fromWarehouseId, data.productId]
@@ -52,7 +51,6 @@ export async function POST(req: Request) {
         [data.companyId, data.fromWarehouseId, data.productId, data.quantity, session.userId]
       );
 
-      // Incrémente (ou crée) la ligne de destination
       const dest = await client.query(
         `SELECT id FROM inventory WHERE warehouse_id = $1 AND product_id = $2 FOR UPDATE`,
         [data.toWarehouseId, data.productId]

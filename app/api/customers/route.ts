@@ -3,10 +3,6 @@ import { z } from "zod";
 import { query } from "@/lib/db";
 import { getSessionFromRequest } from "@/lib/auth";
 
-// Un "customer" (table customers) est le profil d'un utilisateur RELATIF à
-// UNE entreprise (type particulier/professionnel, points fidélité...).
-// Cette route le crée à la première commande, ou le renvoie s'il existe déjà.
-
 const EnsureCustomerSchema = z.object({
   companyId: z.string().uuid(),
 });

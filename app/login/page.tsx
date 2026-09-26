@@ -31,8 +31,6 @@ export default function LoginPage() {
         setError("Vérification en deux étapes requise (à implémenter côté Fondateur).");
         return;
       }
-      // Stockage simple pour ce starter — en production, préférez un cookie
-      // httpOnly défini côté serveur pour éviter l'exposition au JS client.
       localStorage.setItem("token", data.token);
       router.push("/dashboard");
     } catch {
