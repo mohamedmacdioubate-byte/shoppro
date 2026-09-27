@@ -89,6 +89,18 @@ export default function ShopPage() {
             <>
               <div style={{ borderTop: "1px solid var(--border)", marginTop: 10, paddingTop: 10, display: "flex", justifyContent: "space-between", fontWeight: 700 }}><span>Total</span><span>{total.toLocaleString("fr-FR")} GNF</span></div>
               <button className="btn block" style={{ marginTop: 14 }} onClick={goToCheckout}>Commander</button>
+              <button
+                className="btn block"
+                style={{ marginTop: 8, background: "var(--bg-panel)", border: "1px solid var(--border-light)" }}
+                onClick={() => {
+                  if (!warehouseId) { setError("Cette entreprise n'a pas encore de dépôt configuré."); return; }
+                  sessionStorage.setItem(`cart:${companyId}`, JSON.stringify(cart));
+                  sessionStorage.setItem(`warehouse:${companyId}`, warehouseId);
+                  router.push(`/shop/${companyId}/recurring`);
+                }}
+              >
+                Programmer en récurrent (B2B)
+              </button>
             </>
           )}
         </div>

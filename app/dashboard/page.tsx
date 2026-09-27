@@ -42,6 +42,7 @@ export default function DashboardPage() {
           <Link href="/notifications" className="btn" style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>🔔 Notifications</Link>
           <Link href="/companies/new" className="btn">+ Créer mon entreprise</Link>
           <Link href="/drivers/apply" className="btn" style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>🚚 Devenir livreur</Link>
+          <Link href="/invoices" className="btn" style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>🧾 Mes factures</Link>
           <button className="btn" onClick={logout} style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>Déconnexion</button>
         </div>
       </div>
@@ -80,6 +81,9 @@ export default function DashboardPage() {
               <Link href={`/companies/${c.id}/reviews`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Avis</Link>
               <Link href={`/companies/${c.id}/qrcodes`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>QR Codes</Link>
               <Link href={`/companies/${c.id}/employees`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Employés</Link>
+              <Link href={`/companies/${c.id}/groups`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Groupes</Link>
+              <Link href={`/companies/${c.id}/invoices`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Factures</Link>
+              <Link href={`/companies/${c.id}/recurring-orders`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Commandes récurrentes</Link>
               <Link href={`/shop/${c.id}`} style={{ fontSize: 12.5, color: "var(--blue)", fontWeight: 600 }}>Boutique</Link>
             </div>
           </div>

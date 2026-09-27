@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/process-recurring-orders",
+      "schedule": "0 6 * * *"
+    }
+  ]
+}

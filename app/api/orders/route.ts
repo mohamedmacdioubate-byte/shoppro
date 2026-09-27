@@ -153,6 +153,12 @@ export async function POST(req: Request) {
         [createdOrder.id, data.companyId]
       );
 
+      const invoiceNumber = `FAC-${createdOrder.order_number.replace("CMD-", "")}`;
+      await client.query(
+        `INSERT INTO invoices (company_id, order_id, number, amount) VALUES ($1, $2, $3, $4)`,
+        [data.companyId, createdOrder.id, invoiceNumber, total]
+      );
+
       // Fidélité : 1 point par tranche de 1000 GNF dépensés (simplification
       // de démonstration — un vrai barème par palier reste à définir).
       const points = Math.floor(total / 1000);
