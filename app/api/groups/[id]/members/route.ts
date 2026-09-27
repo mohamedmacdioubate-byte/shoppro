@@ -8,6 +8,27 @@ const AddMemberSchema = z.object({
   userId: z.string().uuid(),
 });
 
+export async function GET(req: Request, { params }: { params: { id: string } }) {
+  const session = getSessionFromRequest(req);
+  if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+
+  const group = await query(`SELECT id, company_id FROM groups WHERE id = $1`, [params.id]);
+  if (group.rows.length === 0) {
+    return NextResponse.json({ error: "Groupe introuvable" }, { status: 404 });
+  }
+  const membership = await resolveMembership(session.userId, group.rows[0].company_id);
+  if (!membership) return NextResponse.json({ error: "Accès refusé à cette entreprise" }, { status: 403 });
+
+  const { rows } = await query(
+    `SELECT gm.user_id, u.full_name FROM group_members gm
+     JOIN users u ON u.id = gm.user_id
+     WHERE gm.group_id = $1 ORDER BY u.full_name`,
+    [params.id]
+  );
+
+  return NextResponse.json({ members: rows });
+}
+
 export async function POST(req: Request, { params }: { params: { id: string } }) {
   const session = getSessionFromRequest(req);
   if (!session) return NextResponse.json({ error: "Non authentifié" }, { status: 401 });

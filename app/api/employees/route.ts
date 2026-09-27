@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   if (!membership) return NextResponse.json({ error: "Accès refusé à cette entreprise" }, { status: 403 });
 
   const { rows } = await query(
-    `SELECT cm.id, cm.status, cm.joined_at, u.full_name, u.email, r.name AS role_name, r.is_director
+    `SELECT cm.id, cm.status, cm.joined_at, u.id AS user_id, u.full_name, u.email, r.name AS role_name, r.is_director
      FROM company_members cm
      JOIN users u ON u.id = cm.user_id
      JOIN roles r ON r.id = cm.role_id

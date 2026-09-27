@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 
 type Message = { id: string; content: string; sender_id: string; sender_name: string; created_at: string };
+type Employee = { id: string; full_name: string; email: string };
 
 export default function GroupChatPage() {
   const router = useRouter();
@@ -19,6 +20,12 @@ export default function GroupChatPage() {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  const [showInvite, setShowInvite] = useState(false);
+  const [employees, setEmployees] = useState<{ user_id: string; full_name: string }[]>([]);
+  const [memberIds, setMemberIds] = useState<Set<string>>(new Set());
+  const [inviting, setInviting] = useState<string | null>(null);
+  const [inviteError, setInviteError] = useState<string | null>(null);
+
   const token = () => localStorage.getItem("token");
 
   const load = useCallback(async () => {
@@ -31,17 +38,61 @@ export default function GroupChatPage() {
     setMessages(data.messages ?? []);
   }, [groupId, router]);
 
+  const loadMembers = useCallback(async () => {
+    const t = token();
+    const res = await fetch(`/api/groups/${groupId}/members`, { headers: { Authorization: `Bearer ${t}` } });
+    if (!res.ok) return;
+    const data = await res.json();
+    setMemberIds(new Set((data.members ?? []).map((m: { user_id: string }) => m.user_id)));
+  }, [groupId]);
+
+  const loadEmployees = useCallback(async () => {
+    const t = token();
+    const res = await fetch(`/api/employees?companyId=${companyId}`, { headers: { Authorization: `Bearer ${t}` } });
+    if (!res.ok) return;
+    const data = await res.json();
+    setEmployees((data.employees ?? []).map((e: any) => ({ user_id: e.user_id ?? e.id, full_name: e.full_name })));
+  }, [companyId]);
+
   useEffect(() => {
     fetch("/api/auth/me", { headers: { Authorization: `Bearer ${token()}` } })
       .then((r) => r.json()).then((d) => setCurrentUserId(d.user?.id ?? null)).catch(() => {});
     load().catch(() => setError("Impossible de charger les messages"));
+    loadMembers().catch(() => {});
     const interval = setInterval(() => load().catch(() => {}), 5000);
     return () => clearInterval(interval);
-  }, [load]);
+  }, [load, loadMembers]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  async function toggleInvite() {
+    setShowInvite((v) => !v);
+    if (!showInvite) await loadEmployees();
+  }
+
+  async function invite(userId: string) {
+    setInviting(userId);
+    setInviteError(null);
+    try {
+      const res = await fetch(`/api/groups/${groupId}/members`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
+        body: JSON.stringify({ userId }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setInviteError(data.error ?? "Impossible d'ajouter ce membre");
+        return;
+      }
+      await loadMembers();
+    } catch {
+      setInviteError("Impossible de contacter le serveur");
+    } finally {
+      setInviting(null);
+    }
+  }
 
   async function send() {
     if (!content.trim()) return;
@@ -68,9 +119,36 @@ export default function GroupChatPage() {
 
   return (
     <main style={{ maxWidth: 600, margin: "0 auto", padding: "40px 24px", display: "flex", flexDirection: "column", height: "100vh" }}>
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Link href={`/companies/${companyId}/groups`} style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Groupes</Link>
+        <button
+          className="btn"
+          onClick={toggleInvite}
+          style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)", fontSize: 12, padding: "6px 12px" }}
+        >
+          {showInvite ? "Fermer" : "+ Inviter"}
+        </button>
       </div>
+
+      {showInvite && (
+        <div className="panel" style={{ marginBottom: 14 }}>
+          <div style={{ fontWeight: 600, marginBottom: 10, fontSize: 13.5 }}>Ajouter un membre de l&apos;équipe</div>
+          {inviteError && <div className="error-text">{inviteError}</div>}
+          {employees.filter((e) => !memberIds.has(e.user_id)).length === 0 && (
+            <div style={{ fontSize: 12.5, color: "var(--text-secondary)" }}>Tout le monde est déjà dans ce groupe.</div>
+          )}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {employees.filter((e) => !memberIds.has(e.user_id)).map((e) => (
+              <div key={e.user_id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13 }}>
+                <span>{e.full_name}</span>
+                <button className="btn" disabled={inviting === e.user_id} onClick={() => invite(e.user_id)} style={{ padding: "5px 10px", fontSize: 11.5 }}>
+                  {inviting === e.user_id ? "..." : "Ajouter"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {error && <div className="error-text">{error}</div>}
 
