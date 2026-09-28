@@ -34,10 +34,10 @@ export default function DashboardPage() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 10 }}>
-        <div style={{ fontSize: 20, fontWeight: 700 }}>Mes entreprises</div>
+        <div className="serif" style={{ fontSize: 22, fontWeight: 700 }}>Mes entreprises</div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           {isFounder && (
-            <Link href="/founder" className="btn" style={{ background: "#d9a441" }}>👑 Espace Fondateur</Link>
+            <Link href="/founder" className="btn" style={{ background: "var(--gold)" }}>👑 Espace Fondateur</Link>
           )}
           <Link href="/notifications" className="btn" style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)" }}>🔔 Notifications</Link>
           <Link href="/companies/new" className="btn">+ Créer mon entreprise</Link>
@@ -67,7 +67,7 @@ export default function DashboardPage() {
               </div>
               <span style={{ fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 6,
                 background: c.status === "active" ? "var(--green-dim)" : "var(--orange)",
-                color: c.status === "active" ? "var(--green)" : "#0a0e17" }}>
+                color: c.status === "active" ? "var(--green)" : "var(--ink)" }}>
                 {c.status}
               </span>
             </div>

@@ -40,7 +40,7 @@ export default function RegisterPage() {
   return (
     <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="panel" style={{ width: 380 }}>
-        <div style={{ fontSize: 19, fontWeight: 700, marginBottom: 6 }}>Créer un compte</div>
+        <div className="serif" style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Créer un compte</div>
         <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 22 }}>
           Rejoignez ShopPro en tant que client ou entreprise
         </div>

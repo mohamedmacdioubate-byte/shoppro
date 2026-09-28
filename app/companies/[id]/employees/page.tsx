@@ -98,7 +98,7 @@ export default function EmployeesPage() {
               <div style={{ fontWeight: 600 }}>{e.full_name}</div>
               <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{e.email}</div>
             </div>
-            <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: e.is_director ? "var(--blue-dim)" : "var(--bg-panel)", color: e.is_director ? "#8fb8fb" : "var(--text-secondary)" }}>
+            <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: e.is_director ? "var(--blue-dim)" : "var(--bg-panel)", color: e.is_director ? "var(--amberD)" : "var(--text-secondary)" }}>
               {e.role_name}
             </span>
           </div>

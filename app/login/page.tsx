@@ -43,7 +43,7 @@ export default function LoginPage() {
   return (
     <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="panel" style={{ width: 380 }}>
-        <div style={{ fontSize: 19, fontWeight: 700, marginBottom: 6 }}>Connexion</div>
+        <div className="serif" style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Connexion</div>
         <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 22 }}>
           Accédez à votre espace ShopPro
         </div>

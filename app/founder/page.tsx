@@ -94,7 +94,7 @@ export default function FounderPage() {
         </Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>👑 Espace Fondateur</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>👑 Espace Fondateur</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 20 }}>
         Validation et suivi des entreprises de la plateforme
       </div>
@@ -145,8 +145,8 @@ export default function FounderPage() {
                   fontWeight: 600,
                   padding: "3px 9px",
                   borderRadius: 6,
-                  background: c.status === "active" ? "var(--green-dim)" : c.status === "suspendue" ? "var(--red-dim)" : "var(--orange, #F59E0B)",
-                  color: c.status === "active" ? "var(--green)" : c.status === "suspendue" ? "var(--red)" : "#0a0e17",
+                  background: c.status === "active" ? "var(--green-dim)" : c.status === "suspendue" ? "var(--red-dim)" : "var(--gold)",
+                  color: c.status === "active" ? "var(--green)" : c.status === "suspendue" ? "var(--red)" : "var(--ink)",
                 }}
               >
                 {STATUS_LABELS[c.status] ?? c.status}
@@ -169,7 +169,7 @@ export default function FounderPage() {
                   className="btn"
                   disabled={actingOn === c.id}
                   onClick={() => changeStatus(c.id, "suspendue")}
-                  style={{ background: "var(--orange, #F59E0B)", color: "#0a0e17", padding: "7px 12px", fontSize: 12 }}
+                  style={{ background: "var(--gold)", color: "var(--ink)", padding: "7px 12px", fontSize: 12 }}
                 >
                   Suspendre
                 </button>

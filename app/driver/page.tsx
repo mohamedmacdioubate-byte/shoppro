@@ -120,7 +120,7 @@ export default function DriverDeliveriesPage() {
                   <div style={{ fontWeight: 700 }}>{d.order_number}</div>
                   <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{d.company_name}</div>
                 </div>
-                <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: "var(--blue-dim)", color: "#8fb8fb" }}>
+                <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: "var(--blue-dim)", color: "var(--amberD)" }}>
                   {STATUS_LABELS[d.status] ?? d.status}
                 </span>
               </div>

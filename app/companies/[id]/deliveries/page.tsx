@@ -118,7 +118,7 @@ export default function CompanyDeliveriesPage() {
             <div>
               <div style={{ fontWeight: 700 }}>{d.order_number}</div>
               <div style={{ fontSize: 12.5, color: "var(--text-secondary)" }}>{d.customer_name} · {Number(d.total).toLocaleString("fr-FR")} GNF</div>
-              <span style={{ display: "inline-block", marginTop: 4, fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: "var(--blue-dim)", color: "#8fb8fb" }}>
+              <span style={{ display: "inline-block", marginTop: 4, fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 6, background: "var(--blue-dim)", color: "var(--amberD)" }}>
                 {STATUS_LABELS[d.status] ?? d.status}
               </span>
             </div>

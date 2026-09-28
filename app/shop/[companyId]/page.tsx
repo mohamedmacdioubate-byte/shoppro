@@ -57,7 +57,7 @@ export default function ShopPage() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ marginBottom: 20 }}><Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Retour au tableau de bord</Link></div>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>{companyName || "Boutique"}</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{companyName || "Boutique"}</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>Catalogue disponible à la commande</div>
       {error && <div className="error-text">{error}</div>}
       {products === null && !error && <div style={{ color: "var(--text-secondary)" }}>Chargement...</div>}

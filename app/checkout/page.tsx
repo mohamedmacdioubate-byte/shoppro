@@ -72,7 +72,7 @@ function CheckoutInner() {
   return (
     <main style={{ maxWidth: 480, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ marginBottom: 20 }}>{companyId && <Link href={`/shop/${companyId}`} style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Retour à la boutique</Link>}</div>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 20 }}>Confirmer la commande</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 20 }}>Confirmer la commande</div>
       <div className="panel" style={{ marginBottom: 16 }}>
         {cart.map((i) => (
           <div key={i.productId} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 8 }}><span>{i.name} × {i.quantity}</span><span>{(i.unitPrice * i.quantity).toLocaleString("fr-FR")} GNF</span></div>
