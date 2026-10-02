@@ -38,7 +38,7 @@ export default function CompanyRecurringOrdersPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Commandes récurrentes</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Commandes récurrentes</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Programmées par vos clients professionnels — générées automatiquement chaque jour
       </div>

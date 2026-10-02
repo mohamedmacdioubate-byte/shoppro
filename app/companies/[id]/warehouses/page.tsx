@@ -45,7 +45,7 @@ export default function WarehousesPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
         <Link href={`/companies/${companyId}/stock`} style={{ color: "var(--blue)", fontSize: 13, fontWeight: 600 }}>Voir le stock →</Link>
       </div>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Dépôts</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Dépôts</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>Vos sites de stockage</div>
       {error && <div className="error-text">{error}</div>}
       <div className="panel" style={{ marginBottom: 24 }}>

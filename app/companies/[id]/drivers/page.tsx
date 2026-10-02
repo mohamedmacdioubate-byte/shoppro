@@ -81,7 +81,7 @@ export default function CompanyDriversPage() {
         </Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Livreurs</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Livreurs</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Candidatures et livreurs actifs
       </div>

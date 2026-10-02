@@ -57,7 +57,7 @@ export default function NotificationsPage() {
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-        <div style={{ fontSize: 20, fontWeight: 700 }}>🔔 Notifications</div>
+        <div className="serif" style={{ fontSize: 22, fontWeight: 700  }}>🔔 Notifications</div>
         {unreadCount > 0 && (
           <button className="btn" style={{ color: "var(--text-primary)", background: "var(--bg-card)", border: "1px solid var(--border-light)", fontSize: 12, padding: "6px 12px" }} onClick={() => markRead()}>
             Tout marquer comme lu

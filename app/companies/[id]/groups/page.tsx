@@ -64,7 +64,7 @@ export default function GroupsPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Communication</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Communication</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Groupes de discussion internes
       </div>

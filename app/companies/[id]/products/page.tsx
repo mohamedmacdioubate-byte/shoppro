@@ -50,7 +50,7 @@ export default function CompanyProductsPage() {
   return (
     <main style={{ maxWidth: 860, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ marginBottom: 20 }}><Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Retour au tableau de bord</Link></div>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Produits</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Produits</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>Catalogue de votre entreprise</div>
       {error && <div className="error-text">{error}</div>}
       <div className="panel" style={{ marginBottom: 24 }}>

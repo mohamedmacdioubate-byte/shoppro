@@ -28,7 +28,7 @@ export default function MyInvoicesPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>🧾 Mes factures</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>🧾 Mes factures</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Toutes vos commandes, tous marchands confondus
       </div>

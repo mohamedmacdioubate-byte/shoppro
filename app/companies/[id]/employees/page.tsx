@@ -61,7 +61,7 @@ export default function EmployeesPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Employés</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Employés</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Membres de votre équipe et leurs rôles
       </div>

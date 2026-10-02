@@ -80,7 +80,7 @@ export default function RecurringSetupPage() {
         <Link href={`/shop/${companyId}`} style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Retour à la boutique</Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 20 }}>Programmer une commande récurrente</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 20  }}>Programmer une commande récurrente</div>
 
       <div className="panel" style={{ marginBottom: 16 }}>
         {cart.map((i) => (

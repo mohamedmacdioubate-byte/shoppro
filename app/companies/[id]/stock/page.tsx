@@ -75,7 +75,7 @@ export default function StockPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
         <Link href={`/companies/${companyId}/warehouses`} style={{ color: "var(--blue)", fontSize: 13, fontWeight: 600 }}>Gérer les dépôts →</Link>
       </div>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Stock</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Stock</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>Niveaux de stock par dépôt et par produit</div>
       {error && <div className="error-text">{error}</div>}
       {warehouses.length === 0 && <div className="panel" style={{ marginBottom: 20, color: "var(--text-secondary)" }}>Aucun dépôt. <Link href={`/companies/${companyId}/warehouses`} style={{ color: "var(--blue)" }}>Créez-en un</Link>.</div>}

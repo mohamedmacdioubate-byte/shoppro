@@ -91,7 +91,7 @@ export default function CompanyDeliveriesPage() {
         </Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Livraisons</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>Livraisons</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Suivi et affectation des livraisons
       </div>

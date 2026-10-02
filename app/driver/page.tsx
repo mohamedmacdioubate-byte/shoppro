@@ -95,7 +95,7 @@ export default function DriverDeliveriesPage() {
         </Link>
       </div>
 
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>🚚 Mes livraisons</div>
+      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4  }}>🚚 Mes livraisons</div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
         Livraisons qui vous sont affectées
       </div>
