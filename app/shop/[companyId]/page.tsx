@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
 
 type Product = { id: string; name: string; description: string | null; base_price: string; professional_price: string | null; };
 type CartItem = { productId: string; name: string; unitPrice: number; quantity: number };
@@ -57,7 +58,10 @@ export default function ShopPage() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
       <div style={{ marginBottom: 20 }}><Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Retour au tableau de bord</Link></div>
-      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{companyName || "Boutique"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+        <div className="serif" style={{ fontSize: 22, fontWeight: 700 }}>{companyName || "Boutique"}</div>
+        <ShareButton />
+      </div>
       <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>Catalogue disponible à la commande</div>
       {error && <div className="error-text">{error}</div>}
       {products === null && !error && <div style={{ color: "var(--text-secondary)" }}>Chargement...</div>}
@@ -91,7 +95,7 @@ export default function ShopPage() {
               <button className="btn block" style={{ marginTop: 14 }} onClick={goToCheckout}>Commander</button>
               <button
                 className="btn block"
-                style={{ marginTop: 8, background: "var(--bg-panel)", border: "1px solid var(--border-light)" }}
+                style={{ marginTop: 8, color: "var(--text-primary)", background: "var(--bg-panel)", border: "1px solid var(--border-light)" }}
                 onClick={() => {
                   if (!warehouseId) { setError("Cette entreprise n'a pas encore de dépôt configuré."); return; }
                   sessionStorage.setItem(`cart:${companyId}`, JSON.stringify(cart));

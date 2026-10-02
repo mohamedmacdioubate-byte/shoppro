@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
 
 type Access = { roleName: string; isDirector: boolean; permissions: string[] };
 
@@ -59,7 +60,10 @@ export default function CompanyHubPage() {
         <Link href="/dashboard" style={{ color: "var(--text-secondary)", fontSize: 13 }}>← Tableau de bord</Link>
       </div>
 
-      <div className="serif" style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{companyName || "Entreprise"}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+        <div className="serif" style={{ fontSize: 22, fontWeight: 700 }}>{companyName || "Entreprise"}</div>
+        <ShareButton label="Partager la boutique" url={typeof window !== "undefined" ? `${window.location.origin}/shop/${companyId}` : undefined} />
+      </div>
       {access && (
         <div style={{ color: "var(--text-secondary)", fontSize: 13, marginBottom: 24 }}>
           Connecté en tant que <strong>{access.roleName}</strong>

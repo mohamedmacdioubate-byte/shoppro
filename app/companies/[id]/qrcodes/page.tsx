@@ -117,7 +117,7 @@ export default function QrCodesPage() {
               <div style={{ fontWeight: 600 }}>{TYPE_LABELS[q.target_type] ?? q.target_type}</div>
               <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{q.scan_count} scans</div>
             </div>
-            <button className="btn" style={{ background: "var(--bg-panel)", border: "1px solid var(--border-light)" }} onClick={() => copyLink(q.code)}>
+            <button className="btn" style={{ color: "var(--text-primary)", background: "var(--bg-panel)", border: "1px solid var(--border-light)" }} onClick={() => copyLink(q.code)}>
               Copier le lien
             </button>
           </div>

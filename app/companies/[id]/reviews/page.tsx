@@ -85,7 +85,7 @@ export default function CompanyReviewsPage() {
             </div>
             {r.comment && <div style={{ fontSize: 13, marginBottom: 10 }}>{r.comment}</div>}
             {r.company_reply ? (
-              <div style={{ background: "var(--bg-panel)", borderRadius: 8, padding: 10, fontSize: 12.5 }}>
+              <div style={{ color: "var(--text-primary)", background: "var(--bg-panel)", borderRadius: 8, padding: 10, fontSize: 12.5 }}>
                 <strong>Votre réponse :</strong> {r.company_reply}
               </div>
             ) : (

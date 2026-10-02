@@ -124,7 +124,7 @@ export default function GroupChatPage() {
         <button
           className="btn"
           onClick={toggleInvite}
-          style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)", fontSize: 12, padding: "6px 12px" }}
+          style={{ color: "var(--text-primary)", background: "var(--bg-card)", border: "1px solid var(--border-light)", fontSize: 12, padding: "6px 12px" }}
         >
           {showInvite ? "Fermer" : "+ Inviter"}
         </button>
