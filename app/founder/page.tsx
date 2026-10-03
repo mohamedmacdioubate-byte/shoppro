@@ -189,7 +189,7 @@ export default function FounderPage() {
                   className="btn"
                   disabled={actingOn === c.id}
                   onClick={() => changeStatus(c.id, "resiliee")}
-                  style={{ color: "var(--text-primary)", background: "var(--bg-card)", border: "1px solid var(--red)", color: "var(--red)", padding: "7px 12px", fontSize: 12 }}
+                  style={{ color: "var(--red)", background: "var(--bg-card)", border: "1px solid var(--red)", padding: "7px 12px", fontSize: 12 }}
                 >
                   Résilier
                 </button>

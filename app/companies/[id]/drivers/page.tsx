@@ -115,7 +115,7 @@ export default function CompanyDriversPage() {
                 className="btn"
                 disabled={actingOn === a.id}
                 onClick={() => decide(a.id, "refusee")}
-                style={{ color: "var(--text-primary)", background: "var(--bg-card)", border: "1px solid var(--red)", color: "var(--red)", padding: "7px 12px", fontSize: 12 }}
+                style={{ color: "var(--red)", background: "var(--bg-card)", border: "1px solid var(--red)", padding: "7px 12px", fontSize: 12 }}
               >
                 Refuser
               </button>
